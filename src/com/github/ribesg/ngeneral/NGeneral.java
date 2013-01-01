@@ -3,35 +3,37 @@ package com.github.ribesg.ngeneral;
 import lombok.Getter;
 
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.ribesg.ncore.NCore;
 import com.github.ribesg.ncore.nodes.general.GeneralNode;
 
-public class NGeneral extends JavaPlugin implements GeneralNode {
+public class NGeneral extends GeneralNode {
 
     // Core plugin
-    @Getter NCore   core;
+    public static final String NCORE           = "NCore";
+    @Getter public NCore       core;
 
     // Useful Nodes
+    // // None
 
     // Set to true by afterEnable() call
     // Prevent multiple calls to afterEnable
-    private boolean loadingComplete = false;
+    private boolean            loadingComplete = false;
 
     @Override
     public void onEnable() {
-        if (!Bukkit.getPluginManager().isPluginEnabled("NCore")) {
+        if (!Bukkit.getPluginManager().isPluginEnabled(NCORE)) {
             // TODO
         } else {
+            core = (NCore) Bukkit.getPluginManager().getPlugin(NCORE);
             // TODO
-
+            afterEnable();
         }
     }
 
     public void afterEnable() {
-        if (!this.loadingComplete) {
-            this.loadingComplete = true;
+        if (!loadingComplete) {
+            loadingComplete = true;
             Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
 
                 @Override
